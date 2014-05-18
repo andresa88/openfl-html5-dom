@@ -252,6 +252,15 @@ class URLLoader extends EventDispatcher {
 	
 	private function onError (msg:String):Void {
 		
+		var content:Dynamic = getData ();
+		
+		switch (dataFormat) {
+			
+			case BINARY: this.data = ByteArray.__ofBuffer (content);
+			default: this.data = Std.string (content);
+			
+		}
+
 		var evt = new IOErrorEvent (IOErrorEvent.IO_ERROR);
 		evt.text = msg;
 		evt.currentTarget = this;
